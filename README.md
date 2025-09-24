@@ -1,5 +1,5 @@
 # owl-implementation
-this project is used to implements rebeca to ltl with owl project
+this project is used to implement rebeca to ltl with owl project
 
 Links to clone owl project, download tools and build commands for making owl as local maven dependency 
 
