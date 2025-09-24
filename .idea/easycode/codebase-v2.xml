@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/src/main/java/com/rebeca/AbstractRebeca2AutomatonCommand.java;F:/Java/Projects/SE/owl-implementation/src/main/java/com/rebeca/Rebeca.java;F:/Java/Projects/SE/owl-implementation/src/main/java/com/rebeca/RebecaExpressionConverter.java;F:/Java/Projects/SE/owl-implementation/src/main/java/com/rebeca/RebecaPropertyPrinter.java;F:/Java/Projects/SE/owl-implementation/src/main/java/com/rebeca/RebecaTestUtils.java;F:/Java/Projects/SE/owl-implementation/src/main/java/com/Main.java;F:/Java/Projects/SE/owl-implementation/src/main/java/owl/command/AbstractOwlCommand.java;F:/Java/Projects/SE/owl-implementation/src/main/java/owl/command/AbstractOwlSubcommand.java;F:/Java/Projects/SE/owl-implementation/src/main/java/owl/command/AcceptanceSimplifier.java;F:/Java/Projects/SE/owl-implementation/src/main/java/owl/command/AutomatonWriter.java;F:/Java/Projects/SE/owl-implementation/src/main/java/owl/command/FormulaReader.java;F:/Java/Projects/SE/owl-implementation/src/main/java/owl/command/FormulaSimplifier.java;F:/Java/Projects/SE/owl-implementation/src/main/java/owl/ltl/Literal.java;F:/Java/Projects/SE/owl-implementation/README.md" />
+  </component>
+</project>
