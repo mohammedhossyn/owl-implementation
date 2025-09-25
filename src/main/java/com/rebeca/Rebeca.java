@@ -33,7 +33,7 @@ public class Rebeca {
             File model = new File(rebeceFilePath);
             File property = new File(propertyFilePath);
 
-            Set<CompilerExtension> extension = new HashSet<CompilerExtension>();
+            Set<CompilerExtension> extension = new HashSet<>();
             Pair<RebecaModel, SymbolTable> modelCompilationResult = modelCompiler.compileRebecaFile(model, extension, CoreVersion.CORE_2_0);
 
             PropertyModel propertyModel = propertyCompiler.compilePropertyFile(property, modelCompilationResult.getFirst(), extension);
@@ -69,7 +69,5 @@ public class Rebeca {
             return Stream.empty();
         }
     }
-
-
 
 }

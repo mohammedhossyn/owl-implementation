@@ -1,17 +1,31 @@
 package com;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import com.rebeca.ExecutionExceptionHandler;
+import com.rebeca.Rebeca2nbaCommand;
+import owl.automaton.Automaton;
+import owl.command.OwlCommand;
+import owl.thirdparty.picocli.CommandLine;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        args = new String[]{"rebeca2nba",
+                "-i", "DiningPhilosophers.rebeca",
+                "-i", "DiningPhilosophers.property",
+                "-p", "false",
+                "--run-in-non-native-mode"};
+        OwlCommand owlCommand = new OwlCommand(args);
+        CommandLine cmd = new CommandLine(owlCommand).addSubcommand(Rebeca2nbaCommand.class)
+                .setExecutionExceptionHandler(new ExecutionExceptionHandler());
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        int exitCode = cmd.execute(args);
+
+        CommandLine sub = cmd.getParseResult().subcommand().commandSpec().commandLine();
+        List<Automaton<?, ?>> automatons = new ArrayList<>();
+        if (sub.getCommand() instanceof Rebeca2nbaCommand rebecaCmd) {
+            automatons = rebecaCmd.getAutomatons();
         }
     }
 }
