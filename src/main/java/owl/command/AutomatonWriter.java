@@ -94,13 +94,13 @@ public final class AutomatonWriter {
           ? new HOAIntermediateStoreAndManipulate(printer, new ToStateAcceptanceFixed())
           : printer;
 
-        HoaWriter.write(
-          automaton,
-          wrappedPrinter,
-          stateLabels,
-          subcommand,
-          subcommandArgs,
-          automatonName);
+//        HoaWriter.write(
+//          automaton,
+//          wrappedPrinter,
+//          stateLabels,
+//          subcommand,
+//          subcommandArgs,
+//          automatonName);
 
         writer.flush();
       }

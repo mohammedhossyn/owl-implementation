@@ -5,8 +5,9 @@ import org.rebecalang.compiler.modelcompiler.RebecaModelCompiler;
 import org.rebecalang.compiler.modelcompiler.SymbolTable;
 import org.rebecalang.compiler.modelcompiler.corerebeca.objectmodel.RebecaModel;
 import org.rebecalang.compiler.propertycompiler.PropertyCompiler;
+import org.rebecalang.compiler.propertycompiler.corerebeca.objectmodel.LTLDefinition;
+import org.rebecalang.compiler.propertycompiler.corerebeca.objectmodel.PropertyModel;
 import org.rebecalang.compiler.propertycompiler.generalrebeca.objectmodel.Definition;
-import org.rebecalang.compiler.propertycompiler.generalrebeca.objectmodel.PropertyModel;
 import org.rebecalang.compiler.utils.CompilerExtension;
 import org.rebecalang.compiler.utils.CoreVersion;
 import org.rebecalang.compiler.utils.ExceptionContainer;
@@ -36,7 +37,7 @@ public class Rebeca {
             Set<CompilerExtension> extension = new HashSet<>();
             Pair<RebecaModel, SymbolTable> modelCompilationResult = modelCompiler.compileRebecaFile(model, extension, CoreVersion.CORE_2_0);
 
-            PropertyModel propertyModel = propertyCompiler.compilePropertyFile(property, modelCompilationResult.getFirst(), extension);
+            PropertyModel propertyModel = (PropertyModel) propertyCompiler.compilePropertyFile(property, modelCompilationResult.getFirst(), extension);
 
             if(print)
                 RebecaPropertyPrinter.printDetailedPropertyModelInformation(propertyModel);
@@ -59,6 +60,20 @@ public class Rebeca {
                     }
                 }
             }
+            if (propertyModel.getLTLDefinitions() != null) {
+                for (LTLDefinition definition : propertyModel.getLTLDefinitions()) {
+                    try {
+                        LabelledFormula labelledFormula = RebecaExpressionConverter.convertLtlDefinitionToLabelledFormula(definition);
+                        labelledFormulas.add(labelledFormula);
+                        // System.out.println("Converted definition '" + definition.getName() + "' to formula: " + labelledFormula.formula());
+                    } catch (Exception e) {
+                        System.err.println("Error converting definition '" + definition.getName() + "': " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }
+            labelledFormulas.forEach(System.out::println);
+
 
 
             return labelledFormulas.stream();

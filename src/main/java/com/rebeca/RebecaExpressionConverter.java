@@ -20,6 +20,7 @@
 package com.rebeca;
 
 import org.rebecalang.compiler.modelcompiler.corerebeca.objectmodel.*;
+import org.rebecalang.compiler.propertycompiler.corerebeca.objectmodel.LTLDefinition;
 import org.rebecalang.compiler.propertycompiler.generalrebeca.objectmodel.Definition;
 import owl.ltl.*;
 import owl.ltl.Literal;
@@ -197,6 +198,18 @@ public final class RebecaExpressionConverter {
     private static Formula convertTermPrimary(TermPrimary expr) {
         String name = expr.getName();
         if (name != null && !name.isEmpty()) {
+            if (expr.getParentSuffixPrimary() != null
+                    && !expr.getParentSuffixPrimary().getArguments().isEmpty()) {
+
+                Expression argExpr = expr.getParentSuffixPrimary().getArguments().get(0);
+                Formula argFormula = convertToFormula(argExpr);
+
+                switch (name) {
+                    case "G": return new GOperator(argFormula);
+                    case "F": return new FOperator(argFormula);
+                    case "X": return new XOperator(argFormula);
+                }
+            }
             return createAtomicProposition(name);
         }
         return createAtomicProposition("term_" + System.identityHashCode(expr));
@@ -322,6 +335,32 @@ public final class RebecaExpressionConverter {
         // Remove nulls and ensure we have at least empty list
         atomicProps.removeIf(Objects::isNull);
         
+        return LabelledFormula.of(formula, atomicProps);
+    }
+
+    /**
+     * Convert a Definition to LabelledFormula
+     *
+     * @param ltlDefinition the Rebeca Definition to convert
+     * @return the corresponding LabelledFormula
+     */
+    public static LabelledFormula convertLtlDefinitionToLabelledFormula(LTLDefinition ltlDefinition) {
+        Formula formula = convertToFormula(ltlDefinition.getExpression());
+
+        // Create atomic propositions list from our map
+        List<String> atomicProps = new ArrayList<>();
+        for (int i = 0; i < atomicPropositionCounter; i++) {
+            atomicProps.add(null); // Initialize with nulls
+        }
+
+        // Fill in the atomic proposition names
+        for (Map.Entry<String, Integer> entry : atomicPropositionMap.entrySet()) {
+            atomicProps.set(entry.getValue(), entry.getKey());
+        }
+
+        // Remove nulls and ensure we have at least empty list
+        atomicProps.removeIf(Objects::isNull);
+
         return LabelledFormula.of(formula, atomicProps);
     }
     
